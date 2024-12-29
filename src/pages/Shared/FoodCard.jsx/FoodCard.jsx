@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChefRecoCard = ({food}) => {
+const FoodCard = ({food}) => {
     const { _id, name, recipe, image, category, price} = food
     return (
         <div className="card rounded-none  shadow-xl">
@@ -23,4 +23,4 @@ const ChefRecoCard = ({food}) => {
     );
 };
 
-export default ChefRecoCard;
+export default FoodCard;
