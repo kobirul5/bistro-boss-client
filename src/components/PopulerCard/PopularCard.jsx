@@ -10,14 +10,14 @@ const PopularCard = ({item}) => {
 
         <div className="flex-grow">
           <h3 className="text-lg font-semibold uppercase">
-            Roast Duck Breast <span className="text-gray-400">--------------------</span>
+            {name} <span className="text-gray-400">--------------------</span>
           </h3>
           <p className="text-sm text-gray-500">
-            Roasted duck breast (served pink) with gratin potato and a griottine cherry sauce
+          {recipe}
           </p>
         </div>
   
-        <div className="text-gold-500 font-bold text-lg">$14.5</div>
+        <div className="text-gold-500 font-bold text-lg">{price}</div>
       </div>
     );
 };
