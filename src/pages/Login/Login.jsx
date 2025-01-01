@@ -1,10 +1,11 @@
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import bgImag from "../../assets/others/authentication.png"
 import authImag from "../../assets/others/authentication2.png"
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
-import { useEffect } from "react";
+import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
+import { useEffect, useRef, useState } from "react";
 const Login = () => {
-
+    const captchaREf = useRef(null)
+    const [disable, setDisable]= useState(true)
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
@@ -17,6 +18,14 @@ const Login = () => {
 
     }
 
+    const handleValidationCaptcha= ()=>{
+        const user_captcha_value = captchaREf.current.value;
+        if (validateCaptcha(user_captcha_value)) {
+
+            setDisable(false)
+        }
+
+    }
 
     return (
         <div
@@ -70,13 +79,14 @@ const Login = () => {
                             </label>
                             <input
                                 type="text"
-
+                                ref={captchaREf}
                                 placeholder="Type the Captcha"
                                 className="input input-bordered w-full"
                             />
+                            <button onClick={handleValidationCaptcha} className=" mt-2 btn btn-xs btn-outline ">Captcha validation</button>
                         </div>
                         <div className="form-control">
-                            <input className="btn btn-primary w-full" type="submit" />
+                            <input className="btn btn-primary w-full" type="submit" value="Login" disabled={disable} />
                         </div>
                     </form>
                     <p className="text-center mt-4">
