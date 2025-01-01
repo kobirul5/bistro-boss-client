@@ -2,10 +2,14 @@ import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import bgImag from "../../assets/others/authentication.png"
 import authImag from "../../assets/others/authentication2.png"
 import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 const Login = () => {
     const captchaREf = useRef(null)
     const [disable, setDisable]= useState(true)
+    const {signin} = useContext(AuthContext);
+
+
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
@@ -15,6 +19,16 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email,password)
+        signin(email,password)
+        .then((result) => {
+            const user = result.user;
+            console.log(user)
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+          });
 
     }
 
