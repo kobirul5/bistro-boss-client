@@ -4,6 +4,8 @@ import authImag from "../../assets/others/authentication2.png"
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 const SignUp = () => {
+    const {createUser} = useContext(AuthContext);
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -11,7 +13,17 @@ const SignUp = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email,password)
-   
+        createUser(email,password)
+        .then((result) => {
+            const user = result.user;
+            console.log(user)
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+          });
+
     }
 
    
