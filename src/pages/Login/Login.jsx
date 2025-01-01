@@ -1,14 +1,15 @@
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import bgImag from "../../assets/others/authentication.png"
 import authImag from "../../assets/others/authentication2.png"
-import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 const Login = () => {
     const captchaREf = useRef(null)
-    const [disable, setDisable]= useState(true)
-    const {signin} = useContext(AuthContext);
+    const [disable, setDisable] = useState(true)
+    const { signin } = useContext(AuthContext);
 
 
     useEffect(() => {
@@ -19,21 +20,21 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email,password)
-        signin(email,password)
-        .then((result) => {
-            const user = result.user;
-            console.log(user)
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage)
-          });
+        console.log(email, password)
+        signin(email, password)
+            .then((result) => {
+                const user = result.user;
+                console.log(user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+            });
 
     }
 
-    const handleValidationCaptcha= ()=>{
+    const handleValidationCaptcha = () => {
         const user_captcha_value = captchaREf.current.value;
         if (validateCaptcha(user_captcha_value)) {
 
@@ -47,7 +48,10 @@ const Login = () => {
             style={{
                 backgroundImage: `url(${bgImag})`,
             }}
-            className="min-h-screen flex items-center justify-center">
+            className="min-h-screen flex items-center py-24 justify-center">
+            <Helmet>
+                <title>Login || Bistro Boss</title>
+            </Helmet>
             <div
                 style={{
                     backgroundImage: `url(${bgImag})`,

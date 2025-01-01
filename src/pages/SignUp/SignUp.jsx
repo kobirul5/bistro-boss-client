@@ -3,8 +3,9 @@ import bgImag from "../../assets/others/authentication.png"
 import authImag from "../../assets/others/authentication2.png"
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 const SignUp = () => {
-    const {createUser} = useContext(AuthContext);
+    const { createUser } = useContext(AuthContext);
 
 
     const handleSubmit = (e) => {
@@ -12,21 +13,21 @@ const SignUp = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email,password)
-        createUser(email,password)
-        .then((result) => {
-            const user = result.user;
-            console.log(user)
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage)
-          });
+        console.log(email, password)
+        createUser(email, password)
+            .then((result) => {
+                const user = result.user;
+                console.log(user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+            });
 
     }
 
-   
+
 
     return (
         <div
@@ -34,6 +35,9 @@ const SignUp = () => {
                 backgroundImage: `url(${bgImag})`,
             }}
             className="min-h-screen flex items-center justify-center">
+            <Helmet>
+                <title>Login || Bistro Boss</title>
+            </Helmet>
             <div
                 style={{
                     backgroundImage: `url(${bgImag})`,
@@ -85,9 +89,9 @@ const SignUp = () => {
                                 className="input input-bordered w-full"
                             />
                         </div>
-                       
+
                         <div className="form-control">
-                            <input className="btn btn-primary w-full" type="submit" value="Sign Up"/>
+                            <input className="btn btn-primary w-full" type="submit" value="Sign Up" />
                         </div>
                     </form>
                     <p className="text-center mt-4">
