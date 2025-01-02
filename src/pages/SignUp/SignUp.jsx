@@ -4,20 +4,32 @@ import authImag from "../../assets/others/authentication2.png"
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate()
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const form = e.target;
         const email = form.email.value;
+        const name = form.name.value;
+        const photo = form.photo.value;
         const password = form.password.value;
         console.log(email, password)
         createUser(email, password)
             .then((result) => {
                 const user = result.user;
+                navigate("/")
                 console.log(user)
+                updateUserProfile(name, photo)
+                    .then(() => {
+                        
+                    }).catch((error) => {
+                        // An error occurred
+                        // ...
+                    });
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -64,6 +76,17 @@ const SignUp = () => {
                                 type="text"
                                 name="name"
                                 placeholder="Type here your Name"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Photo URL</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="photo"
+                                placeholder="Type here Photo URl"
                                 className="input input-bordered w-full"
                             />
                         </div>
