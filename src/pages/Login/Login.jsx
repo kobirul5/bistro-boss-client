@@ -4,13 +4,15 @@ import authImag from "../../assets/others/authentication2.png"
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 const Login = () => {
     const captchaREf = useRef(null)
     const [disable, setDisable] = useState(true)
     const { signin } = useContext(AuthContext);
-
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -25,6 +27,7 @@ const Login = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user)
+                navigate(from)
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -34,8 +37,8 @@ const Login = () => {
 
     }
 
-    const handleValidationCaptcha = () => {
-        const user_captcha_value = captchaREf.current.value;
+    const handleValidationCaptcha = (e) => {
+        const user_captcha_value = e.target.value;
         if (validateCaptcha(user_captcha_value)) {
 
             setDisable(false)
@@ -98,11 +101,11 @@ const Login = () => {
                             </label>
                             <input
                                 type="text"
-                                ref={captchaREf}
+                                onBlur={handleValidationCaptcha}
                                 placeholder="Type the Captcha"
                                 className="input input-bordered w-full"
                             />
-                            <button onClick={handleValidationCaptcha} className=" mt-2 btn btn-xs btn-outline ">Captcha validation</button>
+                           
                         </div>
                         <div className="form-control">
                             <input className="btn btn-primary w-full" type="submit" value="Login" disabled={disable} />
