@@ -1,8 +1,32 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import Swal from 'sweetalert2'
 
 const FoodCard = ({food}) => {
     const { _id, name, recipe, image, category, price} = food
+    const {user} = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const handleAddToCart = (food)=>{
-        console.log(food)
+        if(user && user?.email){
+
+        }
+        else{
+            Swal.fire({
+                title: "Yur are not Logged in",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Login"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login", { state: { from: location } })
+                }
+              });
+        }
     }
     
     return (
