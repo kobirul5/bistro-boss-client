@@ -26,13 +26,10 @@ const Login = () => {
         signin(email, password)
             .then((result) => {
                 const user = result.user;
-                console.log(user)
                 navigate(from)
             })
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
             });
 
     }
@@ -108,7 +105,8 @@ const Login = () => {
                            
                         </div>
                         <div className="form-control">
-                            <input className="btn btn-primary w-full" type="submit" value="Login" disabled={disable} />
+                            {/* ToDo: disable  */}
+                            <input className="btn btn-primary w-full" type="submit" value="Login" disabled={false} />
                         </div>
                     </form>
                     <p className="text-center mt-4">
