@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import GoogleLogin from "../../components/GoogoleLogin/GoogleLogin";
 const Login = () => {
     const captchaREf = useRef(null)
     const [disable, setDisable] = useState(true)
@@ -116,9 +117,7 @@ const Login = () => {
                     </p>
                     <div className="divider">Or sign in with</div>
                     <div className="flex justify-center space-x-4">
-                        <button className="btn btn-circle btn-outline">
-                            <FaGoogle />
-                        </button>
+                        <GoogleLogin></GoogleLogin>
                         <button className="btn btn-circle btn-outline">
                             <FaGithub />
                         </button>

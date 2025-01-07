@@ -5,7 +5,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import GoogleLogin from "../../components/GoogoleLogin/GoogleLogin";
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic()
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate()
 
@@ -17,7 +21,6 @@ const SignUp = () => {
         const name = form.name.value;
         const photo = form.photo.value;
         const password = form.password.value;
-        console.log(email, password)
         createUser(email, password)
             .then((result) => {
                 const user = result.user;
@@ -25,16 +28,27 @@ const SignUp = () => {
                 console.log(user)
                 updateUserProfile(name, photo)
                     .then(() => {
-                        
+                       const userInfo= {
+                        name: name,
+                        email: email
+                       }
+                       axiosPublic.post('/users', userInfo)
+                       .then(res=>{
+                        Swal.fire({
+                            position: "top-right",
+                            icon: "success",
+                            title: "Your work has been saved",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
+                       })
                     }).catch((error) => {
-                        // An error occurred
-                        // ...
+                        console.log(error.message)
                     });
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
             });
 
     }
@@ -124,9 +138,7 @@ const SignUp = () => {
                     </p>
                     <div className="divider">Or sign in with</div>
                     <div className="flex justify-center space-x-4">
-                        <button className="btn btn-circle btn-outline">
-                            <FaGoogle />
-                        </button>
+                       <GoogleLogin></GoogleLogin>
                         <button className="btn btn-circle btn-outline">
                             <FaGithub />
                         </button>
