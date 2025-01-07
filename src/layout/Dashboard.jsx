@@ -3,6 +3,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import useCart from "../hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 const Dashboard = () => {
     const [cart, refetch] = useCart()
     const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
@@ -43,7 +44,8 @@ const Dashboard = () => {
                     <ul className="space-y-4">
                         <li className="flex items-center space-x-2">
                             <FaHome />
-                            <span className="font-semibold">Dashboard</span>
+                            <Link to='/' className="font-semibold">User Home</Link>
+                            
                         </li>
                         <li className="flex items-center space-x-2">
                             <FaPlus />
